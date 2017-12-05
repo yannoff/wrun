@@ -1,0 +1,11 @@
+#!/bin/bash
+
+execdir=`mktemp -d`
+remote=$1
+shift 1
+cd ${execdir}
+curl --insecure -s -O ${remote}
+executable=$(realpath $PWD/`basename ${remote}`)
+chmod +x ${executable}
+cd -
+${executable} "$@" && rm -rf ${execdir}
